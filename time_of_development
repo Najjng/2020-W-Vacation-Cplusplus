@@ -1,0 +1,59 @@
+//
+// written with godbolt.org, C++20 standard
+//
+// Created by Nakyeong Kim on 2020/12/31.
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42586
+// When given two vectors of integers, which are progresses and speeds of them, 
+// count how many programs will be released at the same time
+// and return them as a vector
+// using the concept of queue but I just figured it out with vector
+// due to less understanding of queue and usefulness of vector
+//
+
+#include <string>
+#include <vector>
+#include <cmath> // to use ceil
+
+using namespace std;
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+    vector<int> answer;
+    // maybe I can use queue instead of vector here
+    // but I didn't find it useful
+    // max_vec represents max days it takes for a progress to get finished
+    vector<int> max_vec(progresses.size());
+    int max = 0;
+    int cnt = 1;
+    
+    for (int i=0; i<progresses.size(); i++) {
+        float temp = speeds[i];
+        // because the end of progress is 100%
+        // temp = (progress left) / (progress speed a day)
+        // temp represents how many days it takes to get finished
+        temp = (100 - progresses[i])/temp;
+        max = ceil(temp);
+        max_vec[i] = max;
+        }
+    
+    // it starts with index 0
+    // if the max days of index 0 is bigger than the followings,
+    // they will be released on the same day 
+    // which causes the counts of releasing progresses go up
+    // else, the ones with less max nums will be released with the first one
+    // and the one with larger max nums, call it index j, will be released next
+    // starting another for loop with index j
+    max = max_vec[0];
+    for (int j=1; j<max_vec.size(); j++) {
+        if (max >= max_vec[j]) {
+            cnt++;
+        }
+        else {
+            answer.push_back(cnt);
+            // initialize after pushing back
+            cnt = 1;
+            max = max_vec[j];
+        }
+    }
+    answer.push_back(cnt);
+    return answer;
+    }
