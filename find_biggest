@@ -1,0 +1,43 @@
+//
+// written with godbolt.org, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/03.
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42883
+// When given a string consisting of numbers, such as "9432", and a intger k
+// find the biggest number that can be made 
+// without k numbers of integers inside string.
+// Understanding 'Greedy' is important here.
+//
+
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(string number, int k) {
+    string answer = "";
+    int K = number.size() - k;
+    int idx = 0;
+    for (int i=0; i<K; i++) {
+        char max = number[idx];
+        int maxidx = idx;
+				// index first try: j<K
+				// second try: j < k
+				// thrid try: j <= k
+				// last try: j <= k+1
+				// because j should be set in a different range
+				// after i is decided
+        for (int j=idx; j<=k+i; j++){
+            if(max < number[j]) {
+                max = number[j];
+                maxidx = j;
+            }
+        }
+        idx = maxidx + 1;
+        answer += max;
+    }
+    
+    return answer;
+}
+
