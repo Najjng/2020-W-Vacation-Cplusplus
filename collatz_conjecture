@@ -1,0 +1,40 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/08
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/12943
+// COllatz conjecture
+//
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int num) {
+    int answer = 0;
+		// I made temp, not using num in the codes below
+		// so that num would remain the same as input
+    long long temp = num;
+		
+		// to have a loop til it breaks when answer == 500
+    while(1) {
+        if(temp == 1) {
+            break;
+        }
+
+        if(temp % 2 == 0) {
+            temp = temp / 2;
+        } else {
+            temp = temp * 3 + 1;
+        }     
+
+        answer++;
+
+        if(answer == 500) {
+            return -1;
+        }       
+    }
+
+    return answer;
+}
