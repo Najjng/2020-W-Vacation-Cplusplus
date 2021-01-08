@@ -1,0 +1,28 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/08
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/12921
+// finding prime number under n
+// writing code is easy but it had a strict efficiency test
+// coder should know Sieve of Eratosthenes to pass the efficiency test
+//
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n) {
+    int answer = 0;
+    vector<bool> tmp(n+1, true);
+		// Sieve of Eratosthenes
+    for (int i=2; i<n+1; i++) {
+        if (tmp[i] == true) {
+            for (int j=2; i*j<n+1; j++) tmp[i*j] = false; 
+            answer++;
+        }
+    }
+
+    return answer;
+}
