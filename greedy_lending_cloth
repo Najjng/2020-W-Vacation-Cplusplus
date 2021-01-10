@@ -1,0 +1,51 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/10
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42862
+// greedy
+//
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n, vector<int> lost, vector<int> reserve) {
+    int answer = 0;
+    // make a list of students
+    // if the student doesn't have a cloth, put 0
+    // if the student has one cloth, put 1
+    // if the student has two clothes so that can lend one, put 2
+    vector<int> students(n, 1);
+    for (int i=0; i<reserve.size(); i++){
+        students[reserve[i]-1]++;
+    }
+    for (int j=0; j<lost.size(); j++){
+        students[lost[j]-1]--;
+    }
+    
+    // lending process
+    // if the one before or after the lost one has two clotes
+    // lend one cloth and change the vector value
+    for (int i=0; i<n; i++){
+        if (i>0 && students[i]==0 && students[i-1]==2) {
+            students[i]++;
+            students[i-1]--;
+        }
+        if (i<n && students[i]==0 && students[i+1]==2){
+            students[i]++;
+            students[i+1]--;
+        }
+    }
+    
+    // counting process 
+    // count those who has more than one cloth
+    for (int s: students) {
+        if (s > 0 ) {
+            answer++;
+        }
+    }
+    
+    return answer;
+}
