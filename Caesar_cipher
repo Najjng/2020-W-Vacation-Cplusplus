@@ -1,0 +1,44 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/11
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/12926?language=cpp
+// ASCII
+//
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(string s, int n) {
+    string answer = "";
+    for (int i=0; i<s.length(); i++) {
+        // isalpha function checks if the given char is an alphabet or not
+        if (isalpha(s[i])) {
+            // lower letters: 97 ~ 122
+            // using ASCII
+            if (s[i] >= 97 && s[i] <= 122) {
+                if (s[i] + n > 122) {
+                    answer += s[i] + n - 26;
+                }
+                else {
+                    answer += s[i] + n;
+                }
+            }
+            // upper letters: 65 ~ 90
+            else {
+               if (s[i] + n > 90) {
+                   answer += s[i] + n - 26;
+               } 
+                else {
+                    answer += s[i] + n;
+                }
+            }
+        }
+        else {
+            answer += " ";
+        }
+    }
+    return answer;
+}
