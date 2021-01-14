@@ -1,0 +1,42 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/14
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/12915
+// sorting two vectors of string based on the nth char when given int n
+//
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// initialize idx to use in functions below
+int idx;
+
+// to use as a way of order when sorting a string vector
+bool newOrder(string a, string b) {
+    // when two selected char from each vector are different
+    if (a[idx] != b[idx]) {
+        // compare two chars
+        return a[idx] < b[idx];
+    }
+    // if two selected char from each vector are same
+    else {
+        // compare the whole string
+        // in other words, compare the very first char
+        return a < b;
+    }
+}
+
+// I wanted to initialize vector<string> answer
+// and use =operator with vector as
+// answer = sort(strings.begin(), strings.end(), newOrder);
+// which didn't work with an error popping up related to =operator 
+vector<string> solution(vector<string> strings, int n) {
+    idx = n;
+    // simply sort using the order written upper
+    sort(strings.begin(), strings.end(), newOrder);
+    return strings;
+}
