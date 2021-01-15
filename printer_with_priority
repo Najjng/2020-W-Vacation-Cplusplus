@@ -1,0 +1,49 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/15
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42587// printer with priority using queue
+// This code doesn't work with specific cases.
+// NEED TO BE FIXED
+//
+
+#include <string>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int solution(vector<int> priorities, int location) {
+    int answer = 0;
+    
+    priority_queue<int> pq;
+    queue<pair<int, int>> q;
+    
+    for (int i=location+1; i<priorities.size(); i++) {
+        pq.push(priorities[i]);
+        q.push(make_pair(i, priorities[i]));
+    }
+    
+    // the original code was while(true)
+    // which caused segmentation fault
+    // segmentatino fault usually occurs with wrong indexing
+    // but here it occured with boolean
+    while (!q.empty()) {
+        int seq = q.front().first;
+        int pr = q.front().second;
+        q.pop();
+        
+        if (pr == pq.top()) {
+            pq.pop();
+            answer++;
+            if (seq==location) {
+                break;
+            }
+        }
+        else {
+            q.push(make_pair(seq, pr));
+        }
+    }
+    
+    return answer;
+}
