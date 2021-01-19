@@ -1,0 +1,65 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/19
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42583
+// queue
+//
+
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+int solution(int bridge_length, int weight, vector<int> truck_weights) {
+    int answer = 0;
+    queue<int> que;
+    // weight of each truck
+    int w = 0;
+    // max weight of the trucks on the bridge currently
+    int max_w = 0;
+    
+    // for every truck in vector
+    for (int i = 0; i < truck_weights.size(); i++) {
+        w = truck_weights[i];
+        while(1){
+            // for the first truck to come
+            if (que.empty()) {
+                // push the weight of the truck on the que
+                que.push(w); 
+                // add weight
+                max_w += w; 
+                // time += 1
+                answer++;
+                break;
+            }
+            // if there the queue is already size n
+						// mainly because of the 0 added at the codes below
+            // when n is equal to the bridge length
+            else if (que.size() == bridge_length) {
+                // have to remove one
+                max_w -= que.front();
+                que.pop();
+            }
+            // if the truck is not the first one
+            else {
+                // if the max_w is over the weight that the bridge can hold
+                if (w + max_w > weight) {
+                    // push 0 to wait without next truck coming
+                    que.push(0); 
+                    answer++;
+                }
+                // if the bridge can hold more
+                else {
+                    // another truck comes
+                    que.push(w); 
+                    max_w += w;
+                    answer++;
+                    break;
+                }
+            }
+        }
+    }
+    // add bridge_length for the last truck to pass the truck
+    return answer + bridge_length;
+}
