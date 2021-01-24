@@ -1,0 +1,47 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/24
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/12930
+// playing with if/else, vector and flag
+//
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(string s) {
+    string answer = "";
+    // because this problem cannot be solved with index
+    // I used flag so that it would play as a small index mark
+    // inside every word
+    bool flag = true;
+    
+    for (int i=0; i<s.size(); i++) {
+        // error occurs when s[i]
+        // error that I make often
+        if (s.at(i) == ' ') {
+            answer += " ";
+            flag = true;
+        }
+        else {
+            // when flag == true, it means the index is odd
+            if (flag) {
+                // use toupper to make the letter capital
+                answer += toupper(s[i]);
+                // change the flag
+                flag = false;
+            }
+            // when flag == flase, it means thge index is even
+            else {
+                // use tolower to make the letter small
+                answer += tolower(s[i]);
+                // change the flag
+                flag = true;
+            }
+        }
+    }
+    
+    return answer;
+}
