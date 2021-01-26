@@ -1,0 +1,31 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/26
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42747https://programmers.co.kr/learn/courses/30/lessons/12930
+// sorting problem with regularity
+// finding regularity was little bit tough 
+// but writing codes after finding it was easy
+//
+
+#include <string>
+#include <vector>
+#include <algorithm> 
+
+using namespace std;
+
+int solution(vector<int> citations) {
+    int h = 0;
+    
+    // sort in descending order for faster calculation
+    sort(citations.begin(), citations.end(), greater<int>()); 
+    
+    for (int i=0; i<citations.size(); i++) {
+        // add 1 to h til it doesn't match the condition
+        if (citations[i] > i) {
+            h++;
+        } 
+    }
+    
+    return h;
+}
