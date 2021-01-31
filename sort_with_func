@@ -1,0 +1,42 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/01/26
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42746
+// sorting with new function
+//
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// new_sorting funcction to make a sorting way suit this problem
+// for example, if the given ints are a=10, b=6,
+// this functino would see which is bigger between 106 and 610
+// cmp means compare
+bool cmp(int a, int b) {
+    string A = to_string(a);
+    string B = to_string(b);
+    return ((A+B) > (B+A));
+}
+
+string solution(vector<int> numbers) {
+    string answer = "";
+    // sort with new condition
+    sort(numbers.begin(), numbers.end(), cmp);
+    
+    // add to answer as sorted
+    for (int i=0; i<numbers.size(); i++) {
+        answer += to_string(numbers[i]);
+    }
+    
+    // test case 11
+    // exception with every element 0
+    if (answer.front() == '0'){
+        return "0";
+    }
+    
+    return answer;
+}
