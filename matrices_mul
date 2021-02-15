@@ -1,0 +1,50 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/02/14
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/12949
+// multiplication of matrices
+// using for loops
+// 
+// At first trial, had run time error due tu not initializing vector of answer
+//
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//RUN TIME ERROR
+/****
+vector<vector<int>> solution(vector<vector<int>> arr1, vector<vector<int>> arr2) {
+    vector<vector<int>> answer;
+    for (int i=0: i<arr1.size(); i++) {
+        vector<int> to_add;
+        for (int j=0; j<arr2[0].size(); j++) {
+            int ans = 0;
+            for (int k=0; k<arr[i].size(); k++) {
+                sum += arr1[i][j] * arr2[j][k];
+            }
+            ans.push_back(sum);
+        }
+        answer.push_back(ans);
+    }
+    return answer;
+}
+*****/
+
+vector<vector<int>> solution(vector<vector<int>> arr1, vector<vector<int>> arr2) {
+	//initialization
+	vector<vector<int>> answer(arr1.size(), vector<int>(arr2[0].size(), 0)); 
+	for (int i = 0; i < arr1.size(); i++) {
+		for (int j = 0; j < arr2[0].size(); j++) {
+			int sum = 0;
+			for (int k = 0; k < arr2.size(); k++) {
+				sum += arr1[i][k] * arr2[k][j];
+			}
+			answer[i][j] = sum;
+		}
+	}
+	return answer;
+}
+
