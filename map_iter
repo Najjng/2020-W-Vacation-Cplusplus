@@ -1,0 +1,33 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/02/09
+// solved problem posted on https://programmers.co.kr/learn/courses/30/lessons/42578
+// C++ STL map and iter
+//
+
+#include <string>
+#include <vector>
+#include <map> // never forget it!
+
+using namespace std;
+
+int solution(vector<vector<string>> clothes) {
+    int answer = 1;
+    
+    map<string, int> m;
+    
+    // m only saves the number of kinds of clothes
+    for (auto c: clothes) {
+        m[c[1]]++;
+    }
+    
+    // for better computation
+    // I used map iterator here to use the values inside map
+    map<string, int>::iterator it;
+    for(it = m.begin(); it != m.end(); it++){
+        answer *= it->second + 1;
+    }
+    
+    return answer-1;
+}
