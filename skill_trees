@@ -1,0 +1,38 @@
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/02/01
+// solved problem posted on hhttps://programmers.co.kr/learn/courses/30/lessons/49993
+// comparing with for loops
+//
+
+
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+
+int solution(string skill, vector<string> skill_trees) {
+    int answer = 0;
+    for (int i = 0; i < skill_trees.size(); i++) {
+        vector<char> cmp;
+
+        for (int k = 0; k < skill_trees[i].size(); k++) {
+            for (int j = 0; j < skill.size(); j++) {
+                if (skill[j] == skill_trees[i][k]) {
+                    char tmp = skill[j];
+                    cmp.push_back(tmp);
+                }
+            }
+        }
+        bool check = true;
+        for (int c = 0; c < cmp.size(); c++) {
+            if (skill[c] != cmp[c]) {
+                check = false;
+            }
+        }
+        if (check)answer++;
+    }
+
+    return answer;
+}
