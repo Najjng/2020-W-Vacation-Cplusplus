@@ -1,0 +1,34 @@
+
+//
+// written with godbolt, C++20 standard
+//
+// Created by Nakyeong Kim on 2021/02/14
+// solved problem posted onhttps://programmers.co.kr/learn/courses/30/lessons/43162
+// DFS
+// 
+
+#include <vector>
+using namespace std;
+ 
+bool dfs(vector<vector<int>>& computers, int n) {
+    // limitation in the description
+    // if computers[n][n] == 0, this computer is not in network
+    if (!computers[n][n]) return false;
+    // set the computer to zero
+    // to think it is already counted
+    computers[n][n] = 0;
+    for (int i = 0; i < computers.size(); i++) {
+        // recursive dfs if there's connected node
+        if (computers[n][i]) dfs(computers, i);
+    }
+    return true;
+}
+ 
+int solution(int n, vector<vector<int>> computers) {
+    int answer = 0;
+    for (int i = 0; i < n; i++) {
+        // if it's not recursive, answer += 1 after dfs
+        if (computers[i][i] && dfs(computers, i)) answer++;
+    }
+    return answer;
+}
